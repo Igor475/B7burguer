@@ -2,28 +2,19 @@ const menu = document.querySelector(".menu-icon");
 const showMenu = document.querySelector("nav");
 const closeMenu = document.querySelector(".menu-close");
 
-menu.addEventListener("click", () => {
-  showMenu.classList.add("active");
-  closeMenu.classList.add("show");
-  menu.classList.remove('menu-icon');
-});
+const toggleMenu = (open) => {
+  showMenu.classList.toggle("active", open);
+  closeMenu.classList.toggle("show", open);
+  menu.classList.toggle("menu-icon", !open);
+};
 
-closeMenu.addEventListener("click", () => {
-  showMenu.classList.remove("active");
-  closeMenu.classList.remove("show");
-  menu.classList.add("menu-icon");
-});
-
-window.addEventListener("click", ()=> {
-  showMenu.classList.remove("active");
-  menu.classList.add("menu-icon");
-  closeMenu.classList.remove("show");
-});
-
-menu.addEventListener("click", (event)=> {
-  event.stopPropagation();
-});
-
-showMenu.addEventListener("click", (e) => {
+menu.addEventListener("click", (e) => {
+  toggleMenu(true);
   e.stopPropagation();
 });
+
+closeMenu.addEventListener("click", () => toggleMenu(false));
+
+window.addEventListener("click", () => toggleMenu(false));
+
+showMenu.addEventListener("click", (e) => e.stopPropagation());
